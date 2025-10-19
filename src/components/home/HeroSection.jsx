@@ -15,7 +15,7 @@ import 'swiper/css/scrollbar'
 export const HeroSection = () => {
   return (
     <div className='relative'>
-      <div className='w-full mt-10 rounded-5xl overflow-hidden'>
+      <div className='w-full  rounded-5xl overflow-hidden'>
         <Swiper
           modules={[Autoplay, Navigation, Pagination, Scrollbar, A11y]}
           spaceBetween={50}

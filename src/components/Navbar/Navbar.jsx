@@ -5,9 +5,9 @@ import { Link, NavLink } from 'react-router';
 export const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const links = <>
-    <NavLink className="text-primary hover:text-accent link-hover">Home</NavLink>
-    <NavLink className="text-primary hover:text-accent link-hover">All Foods</NavLink>
-    <NavLink className="text-primary hover:text-accent link-hover">Gallery</NavLink>
+    <NavLink to='/'  className={({isActive}) => isActive?"text-accent link":"text-primary hover:text-accent link-hober"}>Home</NavLink>
+    <NavLink to='all-food' className={({isActive}) => isActive?"text-accent link":"text-primary hover:text-accent link-hober"}>All Foods</NavLink>
+    <NavLink to='/gallery' className={({isActive}) => isActive?"text-accent link":"text-primary hover:text-accent link-hober"}>Gallery</NavLink>
   </>
   return (
     <div className="container mx-auto navbar bg-transparent mt-4 font-play">
