@@ -40,7 +40,7 @@ export const Theme = () => {
                         <path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path>
                     </svg>
                 </div>
-                <ul tabIndex="-1" className="dropdown-content bg-base-300 rounded-box z-1 w-52 p-2 shadow-2xl">
+                <ul tabIndex="-1" className="dropdown-content w-48  bg-base-300 rounded-box z-1 md:w-52 p-2 shadow-2xl">
                     <li>
                         <input
                             type="radio"

@@ -39,22 +39,22 @@ export const Purchase = () => {
   const totalPrice = formData.price * formData.quantity
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-base-100 to-base-300 py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-b from-base-100 to-base-300 py-4 md:py-8 px-4">
       <div className="container mx-auto max-w-6xl">
-        <div className="text-center mb-8">
-          <h1 className="text-5xl font-mina text-primary mb-2">খানাপিনা</h1>
-          <h2 className="text-3xl font-play text-base-content">Purchase Food</h2>
-          <p className="text-base-content opacity-70 mt-2">Complete your order</p>
+        <div className="text-center mb-6 md:mb-8">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-mina text-primary mb-2">খানাপিনা</h1>
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-play text-base-content">Purchase Food</h2>
+          <p className="text-sm md:text-base text-base-content opacity-70 mt-2">Complete your order</p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
           {/* Form Section */}
           <div className="lg:col-span-2">
             <div className="card bg-base-100 shadow-2xl">
               <div className="card-body">
-                <h3 className="card-title text-2xl font-play mb-6">Order Details</h3>
+                <h3 className="card-title text-xl md:text-2xl font-play mb-4 md:mb-6">Order Details</h3>
                 
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="form-control">
                       <label className="label mb-2">
@@ -160,7 +160,7 @@ export const Purchase = () => {
           <div className="lg:col-span-1">
             <div className="card bg-base-100 shadow-2xl sticky top-8">
               <div className="card-body">
-                <h3 className="card-title text-2xl font-play mb-6">Order Summary</h3>
+                <h3 className="card-title text-xl md:text-2xl font-play mb-4 md:mb-6">Order Summary</h3>
                 
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
