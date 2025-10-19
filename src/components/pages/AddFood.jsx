@@ -44,7 +44,7 @@ export const AddFood = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-base-200 to-base-300 py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-b from-base-100 to-base-300 py-8 px-4">
       <div className="container mx-auto max-w-4xl">
         <div className="text-center mb-8">
           <h1 className="text-5xl font-mina text-primary mb-2">খানাপিনা</h1>
