@@ -20,7 +20,7 @@ export const Login = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-base-200 to-base-300 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-b from-base-100 to-base-300 flex items-center justify-center p-4">
       <div className="card w-full max-w-md bg-base-100 shadow-2xl">
         <div className="card-body">
           <div className="text-center mb-8">

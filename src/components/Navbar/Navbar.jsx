@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Theme } from '../themes/Theme'
-import { NavLink } from 'react-router';
+import { Link, NavLink } from 'react-router';
 
 export const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -53,7 +53,7 @@ export const Navbar = () => {
               </ul>
             </div>
           ) : (
-            <a href="/login" className="btn btn-primary">Login</a>
+            <Link to="/login" className="btn btn-primary">Login</Link>
           )}
         </div>
       </div>
