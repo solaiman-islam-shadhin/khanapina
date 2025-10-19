@@ -4,7 +4,8 @@ export const Purchase = () => {
   const [formData, setFormData] = useState({
     foodName: '',
     price: '',
-    quantity: 1
+    quantity: 1,
+    address: ''
   })
 
   // Mock logged-in user data (in real app, this would come from auth context)
@@ -128,6 +129,20 @@ export const Purchase = () => {
                         readOnly
                       />
                     </div>
+                  </div>
+
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text font-play text-lg">Delivery Address</span>
+                    </label>
+                    <textarea
+                      name="address"
+                      value={formData.address}
+                      onChange={handleChange}
+                      placeholder="Enter your delivery address"
+                      className="textarea textarea-bordered textarea-lg w-full focus:textarea-primary h-24"
+                      required
+                    ></textarea>
                   </div>
 
                   <button 
