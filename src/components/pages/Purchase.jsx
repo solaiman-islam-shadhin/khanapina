@@ -57,7 +57,7 @@ export const Purchase = () => {
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="form-control">
-                      <label className="label">
+                      <label className="label mb-2">
                         <span className="label-text font-play text-lg">Food Name</span>
                       </label>
                       <input
@@ -66,7 +66,7 @@ export const Purchase = () => {
                         value={formData.foodName}
                         onChange={handleChange}
                         placeholder="Enter food name"
-                        className="input input-bordered input-lg w-full focus:input-primary"
+                        className="input input-bordered focus:border-none input-lg w-full focus:input-primary"
                         required
                       />
                     </div>
@@ -81,14 +81,14 @@ export const Purchase = () => {
                         value={formData.price}
                         onChange={handleChange}
                         placeholder="Enter price"
-                        className="input input-bordered input-lg w-full focus:input-primary"
+                        className="input input-bordered focus:border-none input-lg w-full focus:input-primary"
                         min="1"
                         required
                       />
                     </div>
 
                     <div className="form-control">
-                      <label className="label">
+                      <label className="label mb-2">
                         <span className="label-text font-play text-lg">Quantity</span>
                       </label>
                       <input
@@ -96,7 +96,7 @@ export const Purchase = () => {
                         name="quantity"
                         value={formData.quantity}
                         onChange={handleChange}
-                        className="input input-bordered input-lg w-full focus:input-primary"
+                        className="input input-bordered focus:border-none input-lg w-full focus:input-primary"
                         min="1"
                         required
                       />
@@ -107,32 +107,32 @@ export const Purchase = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="form-control">
-                      <label className="label">
+                      <label className="label mb-2">
                         <span className="label-text font-play text-lg">Buyer Name</span>
                       </label>
                       <input
                         type="text"
                         value={loggedInUser.name}
-                        className="input input-bordered input-lg w-full bg-base-200"
+                        className="input input-bordered focus:border-none input-lg w-full bg-base-200"
                         readOnly
                       />
                     </div>
 
                     <div className="form-control">
-                      <label className="label">
+                      <label className="label mb-2">
                         <span className="label-text font-play text-lg">Buyer Email</span>
                       </label>
                       <input
                         type="email"
                         value={loggedInUser.email}
-                        className="input input-bordered input-lg w-full bg-base-200"
+                        className="input input-bordered focus:border-none input-lg w-full bg-base-200"
                         readOnly
                       />
                     </div>
                   </div>
 
                   <div className="form-control">
-                    <label className="label">
+                    <label className="label mb-2">
                       <span className="label-text font-play text-lg">Delivery Address</span>
                     </label>
                     <textarea
@@ -140,7 +140,7 @@ export const Purchase = () => {
                       value={formData.address}
                       onChange={handleChange}
                       placeholder="Enter your delivery address"
-                      className="textarea textarea-bordered textarea-lg w-full focus:textarea-primary h-24"
+                      className="textarea textarea-bordered focus:border-none textarea-lg w-full focus:textarea-primary h-24"
                       required
                     ></textarea>
                   </div>
