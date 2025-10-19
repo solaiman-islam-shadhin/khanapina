@@ -5,12 +5,12 @@ import { Link, NavLink } from 'react-router';
 export const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const links = <>
-    <NavLink to='/'  className={({isActive}) => isActive?"text-accent link":"text-primary hover:text-accent link-hober"}>Home</NavLink>
-    <NavLink to='all-food' className={({isActive}) => isActive?"text-accent link":"text-primary hover:text-accent link-hober"}>All Foods</NavLink>
-    <NavLink to='/gallery' className={({isActive}) => isActive?"text-accent link":"text-primary hover:text-accent link-hober"}>Gallery</NavLink>
+    <NavLink to='/'  className={({isActive}) => isActive?"text-accent text-lg link":"text-primary text-lg hover:text-accent hover:link"}>Home</NavLink>
+    <NavLink to='all-food' className={({isActive}) => isActive?"text-accent text-lg link":"text-primary text-lg hover:text-accent hover:link"}>All Foods</NavLink>
+    <NavLink to='/gallery' className={({isActive}) => isActive?"text-accent text-lg link":"text-primary text-lg hover:text-accent hover:link"}>Gallery</NavLink>
   </>
   return (
-    <div className="container mx-auto navbar bg-transparent mt-4 font-play">
+    <div className="container mx-auto navbar bg-transparent mt-4 mb-2 font-play">
 
       {/* Mobile menu */}
       <div className="dropdown lg:hidden z-20 bg-base-100">
@@ -25,7 +25,7 @@ export const Navbar = () => {
       </div>
 
       <div className="navbar-start">
-        <a className="font-mina text-2xl font-bold text-primary">খানাপিনা</a>
+        <a className="font-mina text-3xl font-bold text-primary">খানাপিনা</a>
       </div>
 
       <div className="navbar-center hidden lg:flex ">

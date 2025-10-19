@@ -44,7 +44,7 @@ export const BranchesSection = () => {
           <div className="card bg-base-200 shadow-xl hover:shadow-2xl transition-all duration-300 group">
             <figure className="px-4 pt-4">
               <img 
-                src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=250&fit=crop" 
+                src="https://tse2.mm.bing.net/th/id/OIP.CXT1HnNxgSbsOuB1XpJ6kgHaEo?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3" 
                 alt="Chittagong Branch" 
                 className="rounded-xl h-48 w-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
@@ -75,7 +75,7 @@ export const BranchesSection = () => {
           <div className="card bg-base-200 shadow-xl hover:shadow-2xl transition-all duration-300 group">
             <figure className="px-4 pt-4">
               <img 
-                src="https://images.unsplash.com/photo-1590846406792-0adc7f938f1d?w=400&h=250&fit=crop" 
+                src="https://www.hotelscombined.com/rimg/dimg/09/c4/b2d1ab5e-city-54645-17ea2458fc7.jpg?width=2160&height=1215&xhint=1483&yhint=898&crop=true" 
                 alt="Sylhet Branch" 
                 className="rounded-xl h-48 w-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
@@ -106,7 +106,7 @@ export const BranchesSection = () => {
           <div className="card bg-base-200 shadow-xl hover:shadow-2xl transition-all duration-300 group">
             <figure className="px-4 pt-4">
               <img 
-                src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&h=250&fit=crop" 
+                src="https://th.bing.com/th/id/R.ba4d7b2b8c3ce235aa052ea4733bd8ba?rik=b7Zuv84r08teOQ&riu=http%3a%2f%2f1.bp.blogspot.com%2f-fU-_NDe2P4A%2fT1pd0iUG-jI%2fAAAAAAAADmw%2fjEa5wGcbGVA%2fs1600%2fRajshahi%2b11.jpg&ehk=2rJvZsolPSdd3%2f9%2bY36%2fKF1ATjchhvXkbhBTHpBvZVU%3d&risl=&pid=ImgRaw&r=0" 
                 alt="Rajshahi Branch" 
                 className="rounded-xl h-48 w-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
@@ -137,7 +137,7 @@ export const BranchesSection = () => {
           <div className="card bg-base-200 shadow-xl hover:shadow-2xl transition-all duration-300 group">
             <figure className="px-4 pt-4">
               <img 
-                src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&h=250&fit=crop" 
+                src="https://www.mediabangladesh.net/wp-content/uploads/2015/03/shat-gambuj-mosque.png" 
                 alt="Khulna Branch" 
                 className="rounded-xl h-48 w-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
@@ -168,7 +168,7 @@ export const BranchesSection = () => {
           <div className="card bg-base-200 shadow-xl hover:shadow-2xl transition-all duration-300 group">
             <figure className="px-4 pt-4">
               <img 
-                src="https://images.unsplash.com/photo-1551218808-94e220e084d2?w=400&h=250&fit=crop" 
+                src="https://cdn.dhakapost.com/media/imgAll/BG/2022December/barisal-20221209184629.jpg" 
                 alt="Barisal Branch" 
                 className="rounded-xl h-48 w-full object-cover group-hover:scale-105 transition-transform duration-300"
               />

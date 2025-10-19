@@ -13,7 +13,7 @@ export const ChefsSection = () => {
           <div className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300">
             <figure className="px-4 pt-4">
               <img 
-                src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=300&h=300&fit=crop&crop=face" 
+                src="https://img.freepik.com/free-photo/medium-shot-professional-chef-posing_23-2151232161.jpg?semt=ais_hybrid" 
                 alt="Chef Rahman" 
                 className="rounded-full w-48 h-48 object-cover border-4 border-primary"
               />
@@ -32,7 +32,7 @@ export const ChefsSection = () => {
           <div className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300">
             <figure className="px-4 pt-4">
               <img 
-                src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=300&h=300&fit=crop&crop=face" 
+                src="https://static.vecteezy.com/system/resources/previews/012/753/011/non_2x/female-chef-holding-beef-steak-plate-free-photo.jpg" 
                 alt="Chef Fatima" 
                 className="rounded-full w-48 h-48 object-cover border-4 border-primary"
               />
@@ -51,7 +51,7 @@ export const ChefsSection = () => {
           <div className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300">
             <figure className="px-4 pt-4">
               <img 
-                src="https://images.unsplash.com/photo-1583394838336-acd977736f90?w=300&h=300&fit=crop&crop=face" 
+                src="https://media.istockphoto.com/photos/indian-chef-at-his-restaurant-looking-at-the-camera-smiling-with-arms-picture-id875991950?k=20&m=875991950&s=612x612&w=0&h=W1X5K4jD8l_Y4aGW3VXjDWVmIMbg3IJcf8S-v1DCcFA=" 
                 alt="Chef Karim" 
                 className="rounded-full w-48 h-48 object-cover border-4 border-primary"
               />
