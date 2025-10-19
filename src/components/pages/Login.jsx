@@ -6,16 +6,55 @@ export const Login = () => {
     email: '',
     password: ''
   })
+  const [errors, setErrors] = useState({})
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return emailRegex.test(email)
+  }
+
+  const validateForm = () => {
+    const newErrors = {}
+    
+    if (!formData.email) {
+      newErrors.email = 'Email is required'
+    } else if (!validateEmail(formData.email)) {
+      newErrors.email = 'Please enter a valid email'
+    }
+    
+    if (!formData.password) {
+      newErrors.password = 'Password is required'
+    } else if (formData.password.length < 6) {
+      newErrors.password = 'Password must be at least 6 characters'
+    }
+    
+    return newErrors
+  }
 
   const handleChange = (e) => {
+    const { name, value } = e.target
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [name]: value
     })
+    
+    if (errors[name]) {
+      setErrors({
+        ...errors,
+        [name]: ''
+      })
+    }
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    const newErrors = validateForm()
+    
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors)
+      return
+    }
+    
     console.log('Login attempt:', formData)
   }
 
@@ -31,7 +70,7 @@ export const Login = () => {
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="form-control">
-              <label className="label">
+              <label className="label mb-2">
                 <span className="label-text font-play">Email</span>
               </label>
               <input
@@ -40,14 +79,19 @@ export const Login = () => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Enter your email"
-                className="input input-bordered w-full focus:input-primary"
+                className={`input input-bordered w-full focus:border-none focus:input-primary ${errors.email ? 'input-error' : ''}`}
                 required
               />
+              {errors.email && (
+                <label className="label ">
+                  <span className="label-text-alt text-error">{errors.email}</span>
+                </label>
+              )}
             </div>
 
             <div className="form-control">
-              <label className="label">
-                <span className="label-text font-play">Password</span>
+              <label className="label mb-2">
+                <span className="label-text font-play ">Password</span>
               </label>
               <input
                 type="password"
@@ -55,14 +99,15 @@ export const Login = () => {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Enter your password"
-                className="input input-bordered w-full focus:input-primary"
+                className={`input input-bordered w-full focus:border-none focus:input-primary ${errors.password ? 'input-error' : ''}`}
                 required
               />
-              <label className="label">
-                <Link to="/forgot-password" className="label-text-alt link link-hover text-primary">
-                  Forgot password?
-                </Link>
-              </label>
+              {errors.password && (
+                <label className="label">
+                  <span className="label-text-alt text-error">{errors.password}</span>
+                </label>
+              )}
+           
             </div>
 
             <button type="submit" className="btn btn-primary w-full font-play text-lg">

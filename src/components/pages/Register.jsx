@@ -44,7 +44,7 @@ export const Register = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-base-200 to-base-300 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-b from-base-100 to-base-300 flex items-center justify-center p-4">
       <div className="card w-full max-w-md bg-base-100 shadow-2xl">
         <div className="card-body">
           <div className="text-center mb-8">
@@ -55,7 +55,7 @@ export const Register = () => {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="form-control">
-              <label className="label">
+              <label className="label   mb-2">
                 <span className="label-text font-play">Name</span>
               </label>
               <input
@@ -64,13 +64,13 @@ export const Register = () => {
                 value={formData.name}
                 onChange={handleChange}
                 placeholder="Enter your full name"
-                className="input input-bordered w-full focus:input-primary"
+                className="input input-bordered focus:border-none w-full focus:input-primary"
                 required
               />
             </div>
 
             <div className="form-control">
-              <label className="label">
+              <label className="label  mb-2">
                 <span className="label-text font-play">Email</span>
               </label>
               <input
@@ -79,13 +79,13 @@ export const Register = () => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Enter your email"
-                className="input input-bordered w-full focus:input-primary"
+                className="input input-bordered focus:border-none w-full focus:input-primary"
                 required
               />
             </div>
 
             <div className="form-control">
-              <label className="label">
+              <label className="label mb-2">
                 <span className="label-text font-play">Photo URL</span>
               </label>
               <input
@@ -94,14 +94,14 @@ export const Register = () => {
                 value={formData.photoURL}
                 onChange={handleChange}
                 placeholder="Enter your photo URL"
-                className="input input-bordered w-full focus:input-primary"
+                className="input input-bordered focus:border-none w-full focus:input-primary"
                 required
               />
             </div>
 
             <div className="form-control">
-              <label className="label">
-                <span className="label-text font-play">Password</span>
+              <label className="label mb-2">
+                <span className="label-text font-play ">Password</span>
               </label>
               <input
                 type="password"
@@ -109,7 +109,7 @@ export const Register = () => {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Create a password"
-                className={`input input-bordered w-full focus:input-primary ${passwordError ? 'input-error' : ''}`}
+                className={`input input-bordered focus:border-none w-full focus:input-primary ${passwordError ? 'input-error' : ''}`}
                 required
               />
               {passwordError && (
@@ -117,7 +117,7 @@ export const Register = () => {
                   <span className="label-text-alt text-error">{passwordError}</span>
                 </label>
               )}
-              <label className="label">
+              <label className="label mt-1">
                 <span className="label-text-alt text-base-content opacity-70">
                   Must have uppercase, lowercase, and 6+ characters
                 </span>
