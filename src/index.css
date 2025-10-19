@@ -1,0 +1,24 @@
+
+@font-face {
+  font-family: 'PlaywriteDESAS';
+  src: url('./assets/fonts/PlaywriteDESAS-Regular.ttf') format('truetype');   
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Mina-Bold';
+  src: url('./assets/fonts/Mina-Bold.ttf') format('truetype');   
+  font-weight: normal;
+  font-style: normal;
+}
+
+@import "tailwindcss";
+@plugin "daisyui"{
+  themes: halloween --default, dark --prefersdark, cupcake,abyss, forest, synthwave, retro, cyberpunk, valentine, halloween, garden, bumblebee, lavalamp, night, coffee, winter;
+} ;
+@theme {
+  --font-play: 'PlaywriteDESAS', sans-serif;
+}
+@theme {
+  --font-mina: 'Mina-Bold', sans-serif;
+}
