@@ -5,6 +5,7 @@ import { Login } from "../components/pages/Login";
 import { Register } from "../components/pages/Register";
 import { Purchase } from "../components/pages/Purchase";
 import { AddFood } from "../components/pages/AddFood";
+import { Gallery } from "../components/pages/Gallery";
 
 const router = createBrowserRouter([
     {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
             {
                 path: "add-food",
                 Component: AddFood
+            },
+            {
+                path: "gallery",
+                Component: Gallery
             }
         ]
     }
