@@ -69,7 +69,7 @@ export const HeroSection = () => {
             className='text-2xl  md:text-4xl lg:text-6xl font-play text-primary space-y-2 text-left place-items-center'
             initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 1 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
           >
             Welcome to <motion.span
               className='font-mina text-3xl  md:text-6xl lg:text-8xl'
@@ -83,7 +83,7 @@ export const HeroSection = () => {
               className='text-lg sm:text-xl md:text-2xl lg:text-4xl text-accent'
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 1.5 }}
+              transition={{ delay: 1 }}
             >
               <br />-Where Every Bite Tells a Story..
             </motion.span>
@@ -92,7 +92,7 @@ export const HeroSection = () => {
             className='text-xs sm:text-sm md:text-lg lg:text-xl font-play text-info text-left mt-2 sm:mt-3 md:mt-4 lg:mt-5 hidden sm:block'
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.8 }}
+            transition={{ duration: 0.8, delay: 1.2 }}
           >
             At KhanaPina, food isn't just a meal—it's a celebration of culture, comfort, and connection.
             We bring together the bold spices of tradition with the finesse of modern culinary craft to serve
@@ -102,12 +102,12 @@ export const HeroSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 2.2 }}
+          transition={{ duration: 0.6, delay: 1.5 }}
         >
           <motion.button
             className=' cursor-pointer mt-3  md:mt-4 lg:mt-5 py-2 sm:py-3 md:py-4 lg:py-5 bg-transparen backdrop-blur-md p-2 sm:p-3 md:p-4 lg:p-5 shadow-sm rounded-lg shadow-error hover:bg-primary hover:text-white transition-all duration-200'
-            whileHover={{ scale: 1.05, y: -5 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1, y: -5 }}
+        
           >
             <Link className='font-play text-xs sm:text-sm md:text-base lg:text-lg'>View Our Foods</Link>
           </motion.button>

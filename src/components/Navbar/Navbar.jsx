@@ -1,9 +1,20 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import { Theme } from '../themes/Theme'
 import { Link, NavLink } from 'react-router';
+import AuthContext from '../../context/AuthContext';
 
 export const Navbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { user, logOut } = useContext(AuthContext);
+console.log(user)
+  const handleLogout = () => {
+    logOut()
+      .then(() => {
+        alert('Logged out successfully');
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
   const links = <>
     <NavLink to='/'  className={({isActive}) => isActive?"text-accent text-md md:text-lg  link":"text-primary text-md md:text-lg  hover:text-accent hover:link"}>Home</NavLink>
     <NavLink to='all-food' className={({isActive}) => isActive?"text-accent text-md md:text-lg  link":"text-primary text-md md:text-lg  hover:text-accent hover:link"}>All Foods</NavLink>
@@ -40,20 +51,22 @@ export const Navbar = () => {
         </div>
 
         <div>
-          {isLoggedIn ? (
+          {user ? (
             <div className="dropdown dropdown-end">
               <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                 <div className="w-10 rounded-full">
-                  <img src="https://via.placeholder.com/40" alt="Profile" />
+                  <img src={user.photoURL || "https://via.placeholder.com/40"} alt={user.displayName || "User"} />
                 </div>
               </div>
-              <ul tabIndex={0} className="menu menu-sm dropdown-content  rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                <li><a>Profile</a></li>
-                <li><a onClick={() => setIsLoggedIn(false)}>Logout</a></li>
+              <ul tabIndex={0} className="menu menu-sm dropdown-content bg-base-200 rounded-box z-20 mt-3 w-44 md:w-52 p-2 shadow">
+                <li><NavLink to="/my-foods" className={({isActive}) => isActive?"text-accent text-sm md:text-md  link":"text-primary text-sm md:text-md  hover:text-accent hover:link"} >My Foods</NavLink></li>
+                <li><NavLink to="/add-food" className={({isActive}) => isActive?"text-accent text-sm md:text-md  link":"text-primary text-sm md:text-md  hover:text-accent hover:link"}>Add Food</NavLink></li>
+                <li><NavLink to="/my-orders" className={({isActive}) => isActive?"text-accent text-sm md:text-md  link":"text-primary text-sm md:text-md  hover:text-accent hover:link"}>My Orders</NavLink></li>
+                <li><NavLink onClick={handleLogout} className='text-sm md:text-md'>Logout</NavLink></li>
               </ul>
             </div>
           ) : (
-            <Link to="/login" className="btn btn-primary">Login</Link>
+            <NavLink to="/login" className="btn btn-primary">Login</NavLink>
           )}
         </div>
       </div>
