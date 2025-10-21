@@ -71,6 +71,7 @@ export const FeaturedDishes = () => {
                   src={food.foodImage}
                   alt={food.foodName}
                   className="rounded-xl h-64 w-full object-cover"
+                  referrerPolicy='no-referrer'
                 />
               </motion.figure>
               <div className="card-body">
@@ -79,7 +80,7 @@ export const FeaturedDishes = () => {
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
-                  transition={{ delay: 0.3 + index * 0.2 }}
+                  transition={{ duration: 0.3 }}
                 >
                   {food.foodName}
                 </motion.h3>
@@ -88,7 +89,7 @@ export const FeaturedDishes = () => {
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
-                  transition={{ delay: 0.4 + index * 0.2 }}
+                  transition={{ duration: 0.3 }}
                 >
                   {food.description}
                 </motion.p>
@@ -97,7 +98,7 @@ export const FeaturedDishes = () => {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: 0.5 + index * 0.2 }}
+                  transition={{ duration: 0.3 }}
                 >
                   <span className="text-2xl font-bold text-primary">{food.price}৳</span>
                   <motion.button

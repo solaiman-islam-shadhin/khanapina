@@ -117,6 +117,7 @@ export const AllFoods = () => {
                     src={food.foodImage}
                     alt={food.foodName}
                     className="rounded-xl h-48 w-full object-cover"
+                    referrerPolicy='no-referrer'
                   />
                 </motion.figure>
                 <div className="card-body p-4">

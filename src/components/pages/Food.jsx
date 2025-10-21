@@ -131,7 +131,7 @@ export const Food = () => {
                   <div className="flex items-center gap-3">
                     <div className="avatar placeholder">
                       <div className="bg-primary text-primary-content rounded-full w-12">
-                        <img src={food.image} alt={food.name} />
+                        <img referrerPolicy='no-referrer' src={food.image} alt={food.name} />
                       </div>
                     </div>
                     <div>

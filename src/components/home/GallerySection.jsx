@@ -77,6 +77,7 @@ export const GallerySection = () => {
                 style={{ opacity: loadedImages[index] ? 1 : 0 }}
                 whileHover={{ scale: 1.1 }}
                 transition={{ duration: 0.3 }}
+                referrerPolicy='no-referrer'
               />
               <motion.div 
                 className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"

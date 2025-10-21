@@ -101,6 +101,7 @@ export const BranchesSection = () => {
                   src={branch.src}
                   alt={branch.title}
                   className="rounded-xl h-48 w-full object-cover"
+                  referrerPolicy='no-referrer'
                 />
               </motion.figure>
               <div className="card-body">

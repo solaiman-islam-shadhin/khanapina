@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
   const [manualUser, setManualUser] = useState(null)
   const [loading, setLoading] = useState(true)
   const [initialized, setInitialized] = useState(false)
+  const [minLoadingTime, setMinLoadingTime] = useState(false)
   const provider = new GoogleAuthProvider();
 
   const googleLogin = () => {
@@ -32,7 +33,7 @@ export const AuthProvider = ({ children }) => {
   const Toast=()=>{
       const Toast = Swal.mixin({
               toast: true,
-              position: "top-end",
+              position: "top",
               showConfirmButton: false,
               timer: 3000,
               timerProgressBar: true,
@@ -49,7 +50,7 @@ export const AuthProvider = ({ children }) => {
   const Toast2=()=>{
       const Toast = Swal.mixin({
               toast: true,
-              position: "top-end",
+              position: "top",
               showConfirmButton: false,
               timer: 3000,
               timerProgressBar: true,
@@ -61,6 +62,23 @@ export const AuthProvider = ({ children }) => {
             Toast.fire({
               icon: "success",
               title: "Account Created successfully"
+            });
+  }
+  const Toast3=()=>{
+      const Toast = Swal.mixin({
+              toast: true,
+              position: "top",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+              }
+            });
+            Toast.fire({
+              icon: "success",
+              title: "Item Purchased successfully"
             });
   }
 
@@ -79,17 +97,37 @@ export const AuthProvider = ({ children }) => {
   }
 
   useEffect(() => {
+    // Minimum 2-second loading time
+    const minTimer = setTimeout(() => {
+      setMinLoadingTime(true)
+    }, 2000)
+
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser)
       setLoading(false)
-      setInitialized(true)
+      
+      // Only set initialized when both auth is ready and min time has passed
+      if (minLoadingTime) {
+        setInitialized(true)
+      }
     })
-    return () => unsubscribe()
+
+    return () => {
+      clearTimeout(minTimer)
+      unsubscribe()
+    }
   }, [])
 
-  // Don't render children until Firebase auth is initialized
+  // Set initialized when min loading time passes and auth is ready
+  useEffect(() => {
+    if (minLoadingTime && !loading) {
+      setInitialized(true)
+    }
+  }, [minLoadingTime, loading])
+
+  // Don't render children until Firebase auth is initialized and min time has passed
   if (!initialized) {
-    return <FullScreenLoader text="Initializing..." />
+    return <FullScreenLoader />
   }
 
   const authInfo = {
@@ -104,7 +142,8 @@ export const AuthProvider = ({ children }) => {
     Toast2,
     manualUser,
     setManualUser,
-    initialized
+    initialized,
+    Toast3
   }
 
   return (

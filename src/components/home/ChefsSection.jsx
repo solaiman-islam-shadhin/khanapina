@@ -74,6 +74,7 @@ export const ChefsSection = () => {
                   src={chef.src}
                   alt={chef.name}
                   className="rounded-full w-48 h-48 object-cover border-4 border-primary"
+                  referrerPolicy='no-referrer'
                 />
               </motion.figure>
               <div className="card-body text-center">

@@ -5,11 +5,13 @@ import moment from 'moment'
 import AuthContext from '../../context/AuthContext'
 import { toast, ToastContainer } from 'react-toastify'
 import { FullScreenLoader } from '../ui/LoadingSpinner'
+import Swal from 'sweetalert2'
 
 export const MyOrders = () => {
   const [orders, setOrders] = useState([])
   const [loading, setLoading] = useState(true)
   const { user } = useContext(AuthContext)
+
 
   useEffect(() => {
     if (user?.email) {
@@ -26,16 +28,26 @@ export const MyOrders = () => {
   }, [user])
 
   const handleDelete = (orderId) => {
-  
-    axios.delete(`https://restaurant-management-server-side-five.vercel.app/purchasedfoods/${orderId}`)
-      .then(() => {
-        toast.success('Order deleted successfully!')
-        setOrders(orders.filter(order => order._id !== orderId))
-      })
-      .catch((err) => {
-        toast.error('Error deleting order: ' + err.message)
-      })
-
+    Swal.fire({
+      title: 'Delete Order?',
+      text: 'This action cannot be undone!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#ef4444',
+      cancelButtonColor: '#6b7280',
+      confirmButtonText: 'Yes, Delete!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.delete(`https://restaurant-management-server-side-five.vercel.app/purchasedfoods/${orderId}`)
+          .then(() => {
+            setOrders(orders.filter(order => order._id !== orderId))
+            toast.success('Order deleted successfully!')
+          })
+          .catch((err) => {
+            toast.error('Error deleting order: ' + err.message)
+          })
+      }
+    })
   }
 
   if (loading) {
@@ -81,6 +93,7 @@ export const MyOrders = () => {
                         <th className="font-play text-lg">Price</th>
                         <th className="font-play text-lg">Quantity</th>
                         <th className="font-play text-lg">Owner</th>
+                        <th className="font-play text-lg">Status</th>
                         <th className="font-play text-lg">Order Date</th>
                         <th className="font-play text-lg">Action</th>
                       </tr>
@@ -97,14 +110,19 @@ export const MyOrders = () => {
                           <td>
                             <div className="avatar">
                               <div className="mask mask-squircle w-16 h-16">
-                                <img src={order.foodImage} alt={order.foodName} />
+                                <img referrerPolicy='no-referrer' src={order.foodImage} alt={order.foodName} />
                               </div>
                             </div>
                           </td>
                           <td className="font-play font-semibold">{order.foodName}</td>
                           <td className="font-bold text-primary">{order.price}৳</td>
                           <td>{order.quantity}</td>
-                          <td className="text-sm">{order.foodOwner || 'N/A'}</td>
+                          <td className="text-sm">{order.ownerName || 'N/A'}</td>
+                          <td>
+                            <div className={`badge ${order.status === 'accepted' ? 'badge-success' : 'badge-warning'}`}>
+                              {order.status === 'accepted' ? 'Accepted' : 'Pending'}
+                            </div>
+                          </td>
                           <td className="text-sm">{moment(order.purchaseDate).format('MMM DD, YYYY h:mm A')}</td>
                           <td>
                             <motion.button
@@ -140,7 +158,7 @@ export const MyOrders = () => {
                     <div className="flex items-start gap-4">
                       <div className="avatar">
                         <div className="mask mask-squircle w-20 h-20">
-                          <img src={order.foodImage} alt={order.foodName} />
+                          <img referrerPolicy='no-referrer' src={order.foodImage} alt={order.foodName} />
                         </div>
                       </div>
                       <div className="flex-1">
@@ -157,6 +175,12 @@ export const MyOrders = () => {
                           <div className="flex justify-between items-center">
                             <span className="text-sm text-base-content opacity-70">Owner:</span>
                             <span className="text-sm">{order.foodOwner || 'N/A'}</span>
+                          </div>
+                          <div className="flex justify-between items-center">
+                            <span className="text-sm text-base-content opacity-70">Status:</span>
+                            <div className={`badge badge-sm ${order.status === 'accepted' ? 'badge-success' : 'badge-warning'}`}>
+                              {order.status === 'accepted' ? 'Accepted' : 'Pending'}
+                            </div>
                           </div>
                           <div className="flex justify-between items-center">
                             <span className="text-sm text-base-content opacity-70">Order Date:</span>

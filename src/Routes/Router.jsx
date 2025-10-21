@@ -13,6 +13,7 @@ import { AllFoods } from "../components/pages/AllFoods";
 import { PrivateRoute } from "../components/PrivateRoute/PrivateRoute";
 import { NotFound } from "../components/pages/NotFound";
 import { Reviews } from "../components/pages/Reviews";
+import { CustomerOrders } from "../components/pages/CustomerOrders";
 
 
 const router = createBrowserRouter([
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
             {
                 path: "my-orders",
                 element: <PrivateRoute><MyOrders /></PrivateRoute>
+            },
+            {
+                path: "customer-orders",
+                element: <PrivateRoute><CustomerOrders /></PrivateRoute>
             },
             {
                 path: "*",

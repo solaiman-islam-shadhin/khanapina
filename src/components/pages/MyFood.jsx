@@ -110,7 +110,7 @@ export const MyFood = () => {
                                                     <td>
                                                         <div className="avatar">
                                                             <div className="mask mask-squircle w-16 h-16">
-                                                                <img src={food.foodImage} alt={food.foodName} />
+                                                                <img referrerPolicy='no-referrer' src={food.foodImage} alt={food.foodName} />
                                                             </div>
                                                         </div>
                                                     </td>
@@ -153,7 +153,7 @@ export const MyFood = () => {
                                         <div className="flex items-start gap-4">
                                             <div className="avatar">
                                                 <div className="mask mask-squircle w-20 h-20">
-                                                    <img src={food.foodImage} alt={food.foodName} />
+                                                    <img referrerPolicy='no-referrer' src={food.foodImage} alt={food.foodName} />
                                                 </div>
                                             </div>
                                             <div className="flex-1">

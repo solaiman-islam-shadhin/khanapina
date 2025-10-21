@@ -8,24 +8,23 @@ import avatar from "../../assets/logo/Copilot_20251020_001653.png";
 
 export const Navbar = () => {
   const authContext = useContext(AuthContext);
-  
+
 
   const [isUserLoading, setIsUserLoading] = useState(false);
 
 
   if (!authContext) {
-    return null; 
+    return null;
   }
 
   const { user, logOut, manualUser, setManualUser } = authContext;
-
   useEffect(() => {
-    
+
     if (user && user.email && setManualUser && typeof setManualUser === 'function') {
-      
-     
+
+
       if (manualUser && manualUser.email === user.email) {
-        setIsUserLoading(false); 
+        setIsUserLoading(false);
         return;
       }
 
@@ -38,14 +37,14 @@ export const Navbar = () => {
           console.error('Error fetching user data:', error);
         })
         .finally(() => {
-         
+
           setIsUserLoading(false);
         });
     } else {
-     
+
       setIsUserLoading(false);
     }
- 
+
   }, [user, setManualUser, manualUser]);
 
   const handleLogout = () => {
@@ -100,13 +99,16 @@ export const Navbar = () => {
             <div className="dropdown dropdown-end">
               <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                 <div className="w-10 rounded-full">
-                 
-                  {isUserLoading ? (
+                  {isUserLoading || !user ? (
                     <div className="skeleton w-10 h-10 rounded-full"></div>
                   ) : (
                     <img
                       src={manualUser?.photoURL || user?.photoURL || avatar}
                       alt={user?.displayName || "User"}
+                      onError={(e) => {
+                        e.target.src = avatar
+                      }}
+                      referrerPolicy='no-referrer'
                     />
                   )}
                 </div>
@@ -115,6 +117,7 @@ export const Navbar = () => {
                 <li><NavLink to="/my-foods" className={({ isActive }) => isActive ? "text-accent text-sm md:text-md  link" : "text-primary text-sm md:text-md  hover:text-accent hover:link"} >My Foods</NavLink></li>
                 <li><NavLink to="/add-food" className={({ isActive }) => isActive ? "text-accent text-sm md:text-md  link" : "text-primary text-sm md:text-md  hover:text-accent hover:link"}>Add Food</NavLink></li>
                 <li><NavLink to="/my-orders" className={({ isActive }) => isActive ? "text-accent text-sm md:text-md  link" : "text-primary text-sm md:text-md  hover:text-accent hover:link"}>My Orders</NavLink></li>
+                <li><NavLink to="/customer-orders" className={({ isActive }) => isActive ? "text-accent text-sm md:text-md  link" : "text-primary text-sm md:text-md  hover:text-accent hover:link"}>Customer Orders</NavLink></li>
                 <li><NavLink onClick={handleLogout} className='text-sm md:text-md'>Logout</NavLink></li>
               </ul>
             </div>

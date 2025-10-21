@@ -1,16 +1,18 @@
-import { toast, ToastContainer } from 'react-toastify'
+
 import React, { useContext, useEffect, useState } from 'react'
 import AuthContext from '../../context/AuthContext'
 import axios from 'axios'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import moment from 'moment'
 
 export const Purchase = () => {
 
   const [food, setFood] = useState(null)
+  const navigate = useNavigate();
 
-  const { user,manualUser } = useContext(AuthContext);
+  const { user, manualUser, Toast3 } = useContext(AuthContext);
   const { id } = useParams()
+
 
   useEffect(() => {
     axios.get(`https://restaurant-management-server-side-five.vercel.app/foods/${id}`)
@@ -34,7 +36,7 @@ export const Purchase = () => {
     const newPurchaseCount = currentPurchaseCount + purchaseQuantity;
     const currentQuantity = parseInt(food.quantity);
     const newQuantity = currentQuantity - purchaseQuantity;
-    
+
     axios.patch(`https://restaurant-management-server-side-five.vercel.app/foods/${id}`, {
       quantity: newQuantity,
       purchse: newPurchaseCount
@@ -44,20 +46,23 @@ export const Purchase = () => {
       .catch((err) => {
         alert('Error completing purchase: ' + err.message)
       })
-
+   
     const formData = new FormData(form);
     const PurchasedFood = Object.fromEntries(formData.entries());
     const purchasedate = moment().format('YYYY-MM-DD HH:mm:ss');
     PurchasedFood.purchaseDate = purchasedate;
     PurchasedFood.foodImage = food.foodImage;
-    PurchasedFood.foodId = id;
+    PurchasedFood.ownerName = food.name;
+    PurchasedFood.ownerEmail = food.email;
 
 
     axios.post('https://restaurant-management-server-side-five.vercel.app/purchasedfoods', {
       ...PurchasedFood
     })
       .then((res) => {
-        toast.success('Purchase completed successfully!')
+        Toast3();
+         navigate('/my-orders');
+
       })
       .catch((err) => {
         alert('Error completing purchase: ' + err.message)
@@ -73,7 +78,7 @@ export const Purchase = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-base-100 to-base-300 py-4 md:py-8 px-4">
-      <ToastContainer />
+
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-6 md:mb-8">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-mina text-primary mb-2">খানাপিনা</h1>
@@ -213,7 +218,7 @@ export const Purchase = () => {
                   <div className="flex justify-center mb-1">
                     <div className="avatar">
                       <div className="mask mask-squircle w-40 h-40">
-                        <img src={food.foodImage} alt={food.foodName} />
+                        <img referrerPolicy='no-referrer' src={food.foodImage} alt={food.foodName} />
                       </div>
                     </div>
                   </div>

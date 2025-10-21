@@ -125,7 +125,7 @@ export const ReviewsSection = () => {
                   viewport={{ once: true }}
                   transition={{ delay: 0.6 + index * 0.2 }}
                 >
-                  <img src={review.userPhoto || "https://via.placeholder.com/48"} alt={review.userName} className="w-12 h-12 rounded-full mr-3" />
+                  <img src={review.userPhoto || "https://via.placeholder.com/48"} alt={review.userName} className="w-12 h-12 rounded-full mr-3" referrerPolicy='no-referrer' />
                   <div>
                     <h4 className="font-semibold text-primary">{review.userName}</h4>
                     <p className="text-sm text-base-content opacity-70">{moment(review.reviewDate).format('MMM DD, YYYY')}</p>
