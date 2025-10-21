@@ -2,60 +2,36 @@ import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import AuthContext from '../../context/AuthContext';
 import { toast, ToastContainer } from 'react-toastify';
+import axios from 'axios';
 
 export const Register = () => {
-  const { createuser, setUser, googleLogin,Toast,Toast2 } = useContext(AuthContext);
+  const { createuser, setUser, googleLogin, Toast, Toast2, } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    photoURL: '',
-    password: ''
-  })
-  const [passwordError, setPasswordError] = useState('')
-
-  const validatePassword = (password) => {
-    const hasUppercase = /[A-Z]/.test(password)
-    const hasLowercase = /[a-z]/.test(password)
-    const hasMinLength = password.length >= 6
-
-    if (!hasUppercase) return 'Password must contain at least one uppercase letter'
-    if (!hasLowercase) return 'Password must contain at least one lowercase letter'
-    if (!hasMinLength) return 'Password must be at least 6 characters long'
-    return ''
-  }
-
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData({
-      ...formData,
-      [name]: value
-    })
-
-    if (name === 'password') {
-      setPasswordError(validatePassword(value))
-    }
-  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const error = validatePassword(formData.password)
-    if (error) {
-      setPasswordError(error)
-      return
+    const formdata = new FormData(e.target)
+    const { email, password, ...rest } = Object.fromEntries(formdata.entries());
+
+    const userInfo = {
+      email,
+      ...rest
     }
-    createuser(formData.email, formData.password)
+
+    createuser(email, password)
       .then((userCredential) => {
-        const user = userCredential.user;
-        setUser(user);
-     Toast2();
-     navigate('/login');
+        axios.post('http://localhost:5000/userinfo', userInfo)
+          .then((response) => {
+            const user = userCredential.user;
+            setUser(user);
+            Toast2();
+            navigate('/');
+          })
+
       })
       .catch((error) => {
         alert(error.message);
-
-
       })
   }
 
@@ -64,17 +40,17 @@ export const Register = () => {
     googleLogin()
       .then(() => {
         navigate('/');
-         Toast();
+        Toast();
       })
       .catch((error) => {
-     toast.error(error.message);
+        toast.error(error.message);
       })
 
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-base-100 to-base-300 flex items-center justify-center p-4">
-      <ToastContainer/>
+      <ToastContainer />
       <div className="card w-full max-w-md bg-base-100 shadow-2xl">
         <div className="card-body">
           <div className="text-center mb-8">
@@ -91,8 +67,7 @@ export const Register = () => {
               <input
                 type="text"
                 name="name"
-                value={formData.name}
-                onChange={handleChange}
+
                 placeholder="Enter your full name"
                 className="input input-bordered focus:border-none w-full focus:input-primary"
                 required
@@ -106,8 +81,7 @@ export const Register = () => {
               <input
                 type="email"
                 name="email"
-                value={formData.email}
-                onChange={handleChange}
+
                 placeholder="Enter your email"
                 className="input input-bordered focus:border-none w-full focus:input-primary"
                 required
@@ -121,8 +95,7 @@ export const Register = () => {
               <input
                 type="url"
                 name="photoURL"
-                value={formData.photoURL}
-                onChange={handleChange}
+
                 placeholder="Enter your photo URL"
                 className="input input-bordered focus:border-none w-full focus:input-primary"
                 required
@@ -136,17 +109,12 @@ export const Register = () => {
               <input
                 type="password"
                 name="password"
-                value={formData.password}
-                onChange={handleChange}
+
                 placeholder="Create a password"
-                className={`input input-bordered focus:border-none w-full focus:input-primary ${passwordError ? 'input-error' : ''}`}
+                className="input input-bordered focus:border-none w-full focus:input-primary "
                 required
               />
-              {passwordError && (
-                <label className="label">
-                  <span className="label-text-alt text-error">{passwordError}</span>
-                </label>
-              )}
+
               <label className="label mt-1">
                 <span className="label-text-alt text-base-content opacity-70">
                   Must have uppercase, lowercase, and 6+ characters
@@ -157,7 +125,7 @@ export const Register = () => {
             <button
               type="submit"
               className="btn btn-primary w-full font-play text-lg"
-              disabled={!!passwordError}
+
             >
               Create Account
             </button>

@@ -6,6 +6,11 @@ import { Register } from "../components/pages/Register";
 import { Purchase } from "../components/pages/Purchase";
 import { AddFood } from "../components/pages/AddFood";
 import { Gallery } from "../components/pages/Gallery";
+import { Food } from "../components/pages/Food";
+import { MyFood } from "../components/pages/MyFood";
+import { MyOrders } from "../components/pages/MyOrders";
+import { AllFoods } from "../components/pages/AllFoods";
+
 
 const router = createBrowserRouter([
     {
@@ -25,7 +30,7 @@ const router = createBrowserRouter([
                 Component: Register
             },
             {
-                path: "purchase",
+                path: "purchase/:id",
                 Component: Purchase
             },
             {
@@ -33,9 +38,26 @@ const router = createBrowserRouter([
                 Component: AddFood
             },
             {
+                path: "all-foods",
+                Component: AllFoods
+            },
+            {
                 path: "gallery",
                 Component: Gallery
-            }
+            },
+            {
+                path: "food/:id",
+                Component: Food
+            },
+            {
+                path: "my-foods",
+                Component: MyFood
+            },
+            {
+                path: "my-orders",
+                Component: MyOrders
+            },
+            
         ]
     }
 ])

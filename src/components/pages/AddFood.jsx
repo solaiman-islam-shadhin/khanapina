@@ -1,46 +1,30 @@
-import React, { useState } from 'react'
+import axios from "axios"
+import AuthContext from "../../context/AuthContext";
+import { useContext } from "react";
+import { Food } from "./Food";
 
 export const AddFood = () => {
-  const [formData, setFormData] = useState({
-    foodName: '',
-    foodImage: '',
-    foodCategory: '',
-    quantity: 1,
-    price: '',
-    foodOrigin: '',
-    description: ''
-  })
-
-  // Mock logged-in user data (in real app, this would come from auth context)
-  const loggedInUser = {
-    name: 'John Doe',
-    email: 'john.doe@example.com'
-  }
 
   const categories = ['Bengali', 'Chinese', 'Indian', 'Continental', 'Fast Food', 'Dessert', 'Beverage']
-
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData({
-      ...formData,
-      [name]: value
-    })
-  }
-
+  const { user } = useContext(AuthContext);
   const handleSubmit = (e) => {
     e.preventDefault()
-    
-    const foodData = {
-      ...formData,
-      addedBy: {
-        name: loggedInUser.name,
-        email: loggedInUser.email
-      },
-      addedDate: Date.now()
-    }
-    
-    console.log('Food data:', foodData)
-    alert('Food item added successfully!')
+    const form = e.target;
+    const formData = new FormData(form);
+    const FoodData = Object.fromEntries(formData.entries());
+    const purchse = 0;
+    FoodData.purchse = purchse;
+    axios.post('http://localhost:5000/foods', {
+      ...FoodData
+    })
+      .then((res) => {
+        alert('Food item added successfully')
+        e.target.reset()
+      })
+      .catch((err) => {
+        alert('Error adding food item: ' + err.message)
+      })
+
   }
 
   return (
@@ -57,47 +41,43 @@ export const AddFood = () => {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="form-control">
-                  <label className="label">
+                  <label className="label mb-2">
                     <span className="label-text font-play text-lg">Food Name</span>
                   </label>
                   <input
                     type="text"
                     name="foodName"
-                    value={formData.foodName}
-                    onChange={handleChange}
+
                     placeholder="Enter food name"
-                    className="input input-bordered input-lg w-full focus:input-primary"
+                    className="input input-bordered focus:border-none input-lg w-full focus:input-primary"
                     required
                   />
                 </div>
 
                 <div className="form-control">
-                  <label className="label">
+                  <label className="label mb-2">
                     <span className="label-text font-play text-lg">Food Image URL</span>
                   </label>
                   <input
                     type="url"
                     name="foodImage"
-                    value={formData.foodImage}
-                    onChange={handleChange}
+
                     placeholder="Enter image URL"
-                    className="input input-bordered input-lg w-full focus:input-primary"
+                    className="input input-bordered focus:border-none input-lg w-full focus:input-primary"
                     required
                   />
                 </div>
 
                 <div className="form-control">
-                  <label className="label">
+                  <label className="label mb-2">
                     <span className="label-text font-play text-lg">Food Category</span>
                   </label>
                   <select
                     name="foodCategory"
-                    value={formData.foodCategory}
-                    onChange={handleChange}
-                    className="select select-bordered select-lg w-full focus:select-primary"
+                    className="select select-bordered focus:border-none  focus:ring-0 select-lg w-full focus:select-primary"
                     required
                   >
-                    <option value="">Select category</option>
+                    <option value="" disabled>Select category</option>
                     {categories.map(category => (
                       <option key={category} value={category}>{category}</option>
                     ))}
@@ -105,47 +85,44 @@ export const AddFood = () => {
                 </div>
 
                 <div className="form-control">
-                  <label className="label">
+                  <label className="label mb-2">
                     <span className="label-text font-play text-lg">Quantity</span>
                   </label>
                   <input
                     type="number"
                     name="quantity"
-                    value={formData.quantity}
-                    onChange={handleChange}
-                    className="input input-bordered input-lg w-full focus:input-primary"
+
+                    className="input input-bordered focus:border-none input-lg w-full focus:input-primary"
                     min="1"
                     required
                   />
                 </div>
 
                 <div className="form-control">
-                  <label className="label">
+                  <label className="label mb-2">
                     <span className="label-text font-play text-lg">Price (৳)</span>
                   </label>
                   <input
                     type="number"
                     name="price"
-                    value={formData.price}
-                    onChange={handleChange}
+
                     placeholder="Enter price"
-                    className="input input-bordered input-lg w-full focus:input-primary"
+                    className="input input-bordered focus:border-none input-lg w-full focus:input-primary"
                     min="1"
                     required
                   />
                 </div>
 
                 <div className="form-control">
-                  <label className="label">
+                  <label className="label mb-2">
                     <span className="label-text font-play text-lg">Food Origin (Country)</span>
                   </label>
                   <input
                     type="text"
                     name="foodOrigin"
-                    value={formData.foodOrigin}
-                    onChange={handleChange}
+
                     placeholder="Enter country of origin"
-                    className="input input-bordered input-lg w-full focus:input-primary"
+                    className="input input-bordered focus:border-none input-lg w-full focus:input-primary"
                     required
                   />
                 </div>
@@ -155,46 +132,47 @@ export const AddFood = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="form-control">
-                  <label className="label">
+                  <label className="label mb-2">
                     <span className="label-text font-play text-lg">Name</span>
                   </label>
                   <input
                     type="text"
-                    value={loggedInUser.name}
-                    className="input input-bordered input-lg w-full bg-base-200"
+                    name="name"
+                    defaultValue={user.displayName}
+                    className="input input-bordered focus:border-none input-lg w-full bg-base-200"
                     readOnly
                   />
                 </div>
 
                 <div className="form-control">
-                  <label className="label">
+                  <label className="label mb-2">
                     <span className="label-text font-play text-lg">Email</span>
                   </label>
                   <input
                     type="email"
-                    value={loggedInUser.email}
-                    className="input input-bordered input-lg w-full bg-base-200"
+                    name="email"
+                    defaultValue={user.email}
+                    className="input input-bordered focus:border-none input-lg w-full bg-base-200"
                     readOnly
                   />
                 </div>
               </div>
 
               <div className="form-control">
-                <label className="label">
+                <label className="label mb-2">
                   <span className="label-text font-play text-lg">Description</span>
                 </label>
                 <textarea
                   name="description"
-                  value={formData.description}
-                  onChange={handleChange}
+
                   placeholder="Enter ingredients, making procedure, and other details..."
-                  className="textarea textarea-bordered textarea-lg w-full focus:textarea-primary h-32"
+                  className="textarea textarea-bordered focus:border-none textarea-lg w-full focus:textarea-primary h-32"
                   required
                 ></textarea>
               </div>
 
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 className="btn btn-primary btn-lg w-full font-play text-xl"
               >
                 Add Item

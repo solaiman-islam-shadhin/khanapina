@@ -1,45 +1,81 @@
-import React, { useState } from 'react'
+import { toast, ToastContainer } from 'react-toastify'
+import React, { useContext, useEffect, useState } from 'react'
+import AuthContext from '../../context/AuthContext'
+import axios from 'axios'
+import { useParams } from 'react-router'
+import moment from 'moment'
 
 export const Purchase = () => {
-  const [formData, setFormData] = useState({
-    foodName: '',
-    price: '',
-    quantity: 1,
-    address: ''
-  })
 
-  // Mock logged-in user data (in real app, this would come from auth context)
-  const loggedInUser = {
-    name: 'John Doe',
-    email: 'john.doe@example.com'
-  }
+  const [food, setFood] = useState(null)
 
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData({
-      ...formData,
-      [name]: value
-    })
-  }
+  const { user } = useContext(AuthContext);
+  const { id } = useParams()
+
+  useEffect(() => {
+    axios.get(`http://localhost:5000/foods/${id}`)
+      .then((res) => {
+        setFood(res.data)
+
+      })
+      .catch((err) => {
+        alert(err.message)
+
+      })
+  }, [id])
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    const form = e.target;
+
+    // quantity update logic
+    const purchaseQuantity = parseInt(form.quantity.value);
+    const currentPurchaseCount = food.purchse || 0;
+    const newPurchaseCount = currentPurchaseCount + purchaseQuantity;
+    const currentQuantity = parseInt(food.quantity);
+    const newQuantity = currentQuantity - purchaseQuantity;
     
-    const purchaseData = {
-      ...formData,
-      buyerName: loggedInUser.name,
-      buyerEmail: loggedInUser.email,
-      buyingDate: Date.now()
-    }
-    
-    console.log('Purchase data:', purchaseData)
-    alert('Purchase successful!')
+    axios.patch(`http://localhost:5000/foods/${id}`, {
+      quantity: newQuantity,
+      purchse: newPurchaseCount
+    })
+      .then((res) => {
+        alert('Purchase successful and inventory updated!')
+        console.log(res.data)
+      })
+      .catch((err) => {
+        alert('Error completing purchase: ' + err.message)
+      })
+
+    const formData = new FormData(form);
+    const PurchasedFood = Object.fromEntries(formData.entries());
+    const purchasedate = moment().format('YYYY-MM-DD HH:mm:ss');
+    PurchasedFood.purchaseDate = purchasedate;
+    PurchasedFood.foodImage = food.foodImage;
+    PurchasedFood.foodId = id;
+
+
+    axios.post('http://localhost:5000/purchasedfoods', {
+      ...PurchasedFood
+    })
+      .then((res) => {
+        toast.success('Purchase completed successfully!')
+      })
+      .catch((err) => {
+        alert('Error completing purchase: ' + err.message)
+      })
+
+    form.reset();
+
+
   }
 
-  const totalPrice = formData.price * formData.quantity
+  const [quantity, setQuantity] = useState(1)
+  const totalPrice = food ? food.price * quantity : 0
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-base-100 to-base-300 py-4 md:py-8 px-4">
+      <ToastContainer />
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-6 md:mb-8">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-mina text-primary mb-2">খানাপিনা</h1>
@@ -53,7 +89,7 @@ export const Purchase = () => {
             <div className="card bg-base-100 shadow-2xl">
               <div className="card-body">
                 <h3 className="card-title text-xl md:text-2xl font-play mb-4 md:mb-6">Order Details</h3>
-                
+
                 <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="form-control">
@@ -63,8 +99,7 @@ export const Purchase = () => {
                       <input
                         type="text"
                         name="foodName"
-                        value={formData.foodName}
-                        onChange={handleChange}
+                        defaultValue={food ? food.foodName : ""}
                         placeholder="Enter food name"
                         className="input input-bordered focus:border-none input-lg w-full focus:input-primary"
                         required
@@ -72,18 +107,18 @@ export const Purchase = () => {
                     </div>
 
                     <div className="form-control">
-                      <label className="label">
+                      <label className="label mb-2">
                         <span className="label-text font-play text-lg">Price (৳)</span>
                       </label>
                       <input
-                        type="number"
+                        type="text"
                         name="price"
-                        value={formData.price}
-                        onChange={handleChange}
+                        defaultValue={food ? food.price : ""}
                         placeholder="Enter price"
                         className="input input-bordered focus:border-none input-lg w-full focus:input-primary"
                         min="1"
                         required
+                        readOnly
                       />
                     </div>
 
@@ -94,10 +129,24 @@ export const Purchase = () => {
                       <input
                         type="number"
                         name="quantity"
-                        value={formData.quantity}
-                        onChange={handleChange}
+                        value={quantity}
+                        onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
                         className="input input-bordered focus:border-none input-lg w-full focus:input-primary"
                         min="1"
+                        max={food ? food.quantity : 1}
+                        required
+                      />
+                    </div>
+                    <div className="form-control">
+                      <label className="label mb-2">
+                        <span className="label-text font-play text-lg">Phone Number</span>
+                      </label>
+                      <input
+                        type="text"
+                        name="phonenumber"
+
+                        placeholder='+880 1234567891'
+                        className="input input-bordered focus:border-none input-lg w-full focus:input-primary"
                         required
                       />
                     </div>
@@ -112,7 +161,8 @@ export const Purchase = () => {
                       </label>
                       <input
                         type="text"
-                        value={loggedInUser.name}
+                        name='name'
+                        value={user?.displayName || user?.name || ''}
                         className="input input-bordered focus:border-none input-lg w-full bg-base-200"
                         readOnly
                       />
@@ -124,7 +174,8 @@ export const Purchase = () => {
                       </label>
                       <input
                         type="email"
-                        value={loggedInUser.email}
+                        name='email'
+                        value={user?.email || ''}
                         className="input input-bordered focus:border-none input-lg w-full bg-base-200"
                         readOnly
                       />
@@ -137,16 +188,14 @@ export const Purchase = () => {
                     </label>
                     <textarea
                       name="address"
-                      value={formData.address}
-                      onChange={handleChange}
-                      placeholder="Enter your delivery address"
+                      placeholder="Enter your delivery address here"
                       className="textarea textarea-bordered focus:border-none textarea-lg w-full focus:textarea-primary h-24"
                       required
                     ></textarea>
                   </div>
 
-                  <button 
-                    type="submit" 
+                  <button
+                    type="submit"
                     className="btn btn-primary btn-lg w-full font-play text-xl"
                   >
                     Complete Purchase
@@ -161,32 +210,42 @@ export const Purchase = () => {
             <div className="card bg-base-100 shadow-2xl sticky top-8">
               <div className="card-body">
                 <h3 className="card-title text-xl md:text-2xl font-play mb-4 md:mb-6">Order Summary</h3>
-                
+
+                {food && (
+                  <div className="flex justify-center mb-1">
+                    <div className="avatar">
+                      <div className="mask mask-squircle w-40 h-40">
+                        <img src={food.foodImage} alt={food.foodName} />
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
                     <span className="font-play text-lg">Food Item:</span>
-                    <span className="font-semibold">{formData.foodName || 'Not selected'}</span>
+                    <span className="font-semibold">{food?.foodName || 'Loading...'}</span>
                   </div>
-                  
+
                   <div className="flex justify-between items-center">
                     <span className="font-play text-lg">Unit Price:</span>
-                    <span className="font-semibold">৳{formData.price || '0'}</span>
+                    <span className="font-semibold">৳{food?.price || '0'}</span>
                   </div>
-                  
+
                   <div className="flex justify-between items-center">
                     <span className="font-play text-lg">Quantity:</span>
-                    <span className="font-semibold">{formData.quantity}</span>
+                    <span className="font-semibold">{quantity}</span>
                   </div>
-                  
+
                   <div className="divider"></div>
-                  
+
                   <div className="flex justify-between items-center text-2xl font-bold">
                     <span className="font-play">Total:</span>
                     <span className="text-primary">৳{totalPrice || '0'}</span>
                   </div>
                 </div>
 
-                {formData.price && formData.quantity && (
+                {food && (
                   <div className="alert alert-info mt-6">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-current shrink-0 w-6 h-6">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>

@@ -7,6 +7,7 @@ const AuthContext = createContext(null)
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
+  const [manualUser, setManualUser] = useState(null)
   const [loading, setLoading] = useState(true)
   const provider = new GoogleAuthProvider();
 
@@ -87,7 +88,9 @@ export const AuthProvider = ({ children }) => {
     setUser,
     googleLogin,
     Toast,
-    Toast2
+    Toast2,
+    manualUser,
+    setManualUser
   }
 
   return (
