@@ -18,7 +18,7 @@ export const CustomerOrders = () => {
 
   const fetchOrders = () => {
     if (user?.email) {
-      axios.get(`http://localhost:5000/customer-orders/${user.email}`)
+      axios.get(`https://restaurant-management-server-side-five.vercel.app/customer-orders/${user.email}`)
         .then((res) => {
           setOrders(res.data)
           setLoading(false)
@@ -41,7 +41,7 @@ export const CustomerOrders = () => {
       confirmButtonText: 'Yes, Accept!'
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.patch(`http://localhost:5000/purchasedfoods/${orderId}`, {
+        axios.patch(`https://restaurant-management-server-side-five.vercel.app/purchasedfoods/${orderId}`, {
           status: 'accepted'
         })
           .then(() => {
@@ -70,7 +70,7 @@ export const CustomerOrders = () => {
       confirmButtonText: 'Yes, Delete!'
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:5000/purchasedfoods/${orderId}`)
+        axios.delete(`https://restaurant-management-server-side-five.vercel.app/purchasedfoods/${orderId}`)
           .then(() => {
             setOrders(orders.filter(order => order._id !== orderId))
             setShowModal(false)
