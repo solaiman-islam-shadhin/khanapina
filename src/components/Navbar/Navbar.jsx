@@ -4,22 +4,35 @@ import { Theme } from '../themes/Theme'
 import { Link, NavLink } from 'react-router';
 import AuthContext from '../../context/AuthContext';
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+
 
 export const Navbar = () => {
-  const { user, logOut, manualUser, setManualUser } = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
+  
+  // Add null check for context
+  if (!authContext) {
+    return null; // or a loading spinner
+  }
+  
+  const { user, logOut, manualUser, setManualUser } = authContext;
+  
   useEffect(() => {
-    axios.get(`http://localhost:5000/user/${user.email}`)
-      .then((response) => {
-        setManualUser(response.data);
-
-      }
-      )
-  }, [user.email]);
+    if (user && user.email && setManualUser && typeof setManualUser === 'function') {
+      axios.get(`https://restaurant-management-server-side-five.vercel.app/user/${user.email}`)
+        .then((response) => {
+          setManualUser(response.data);
+        })
+        .catch((error) => {
+          console.error('Error fetching user data:', error);
+        });
+    }
+  }, [user, setManualUser]);
 
   const handleLogout = () => {
     logOut()
       .then(() => {
-        alert('Logged out successfully');
+        toast.success('Logged out successfully');
       })
       .catch((error) => {
         alert(error.message);
@@ -32,7 +45,7 @@ export const Navbar = () => {
   </>
   return (
     <div className="container mx-auto navbar bg-transparent mt-4 mb-2 font-play ">
-
+<ToastContainer />
       {/* Mobile menu */}
       <div className="dropdown lg:hidden z-20 ">
         <div tabIndex={0} role="button" className="btn btn-ghost">
@@ -65,7 +78,7 @@ export const Navbar = () => {
             <div className="dropdown dropdown-end">
               <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                 <div className="w-10 rounded-full">
-                  <img src={user?.photoURL || manualUser?.photoURL} alt={user.displayName || "User"} />
+                  <img src={user?.photoURL || manualUser?.photoURL || "https://via.placeholder.com/40"} alt={user?.displayName || "User"} />
                 </div>
               </div>
               <ul tabIndex={0} className="menu menu-sm dropdown-content bg-base-200 rounded-box z-20 mt-3 w-44 md:w-52 p-2 shadow">

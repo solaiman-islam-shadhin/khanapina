@@ -2,6 +2,7 @@ import axios from "axios"
 import AuthContext from "../../context/AuthContext";
 import { useContext } from "react";
 import { Food } from "./Food";
+import { toast, ToastContainer } from "react-toastify";
 
 export const AddFood = () => {
 
@@ -14,11 +15,11 @@ export const AddFood = () => {
     const FoodData = Object.fromEntries(formData.entries());
     const purchse = 0;
     FoodData.purchse = purchse;
-    axios.post('http://localhost:5000/foods', {
+    axios.post('https://restaurant-management-server-side-five.vercel.app/foods', {
       ...FoodData
     })
       .then((res) => {
-        alert('Food item added successfully')
+        toast.success('Food item added successfully')
         e.target.reset()
       })
       .catch((err) => {
@@ -29,6 +30,7 @@ export const AddFood = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-base-100 to-base-300 py-8 px-4">
+      <ToastContainer />
       <div className="container mx-auto max-w-4xl">
         <div className="text-center mb-8">
           <h1 className="text-5xl font-mina text-primary mb-2">খানাপিনা</h1>

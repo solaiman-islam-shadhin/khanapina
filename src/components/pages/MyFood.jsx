@@ -4,6 +4,7 @@ import axios from 'axios'
 import AuthContext from '../../context/AuthContext'
 import { CiEdit } from "react-icons/ci";
 import { toast, ToastContainer } from 'react-toastify';
+import { FullScreenLoader } from '../ui/LoadingSpinner';
 export const MyFood = () => {
     const [foods, setFoods] = useState([])
     const [loading, setLoading] = useState(true)
@@ -13,7 +14,7 @@ export const MyFood = () => {
 
     useEffect(() => {
         if (user?.email) {
-            axios.get(`http://localhost:5000/my-foods/${user.email}`)
+            axios.get(`https://restaurant-management-server-side-five.vercel.app/my-foods/${user.email}`)
                 .then((res) => {
                     setFoods(res.data)
                     setLoading(false)
@@ -36,7 +37,7 @@ export const MyFood = () => {
         const formData = new FormData(form)
         const updatedData = Object.fromEntries(formData.entries())
 
-        axios.patch(`http://localhost:5000/food/${selectedFood._id}`, updatedData)
+        axios.patch(`https://restaurant-management-server-side-five.vercel.app/food/${selectedFood._id}`, updatedData)
             .then((res) => {
                 toast.success('Food updated successfully!')
                 setShowModal(false)
@@ -51,11 +52,7 @@ export const MyFood = () => {
     }
 
     if (loading) {
-        return (
-            <div className="min-h-screen flex items-center justify-center">
-                <span className="loading loading-spinner loading-lg text-primary"></span>
-            </div>
-        )
+        return <FullScreenLoader text="Loading your foods..." />
     }
 
     return (

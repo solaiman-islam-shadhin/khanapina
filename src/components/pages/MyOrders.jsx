@@ -4,6 +4,7 @@ import axios from 'axios'
 import moment from 'moment'
 import AuthContext from '../../context/AuthContext'
 import { toast, ToastContainer } from 'react-toastify'
+import { FullScreenLoader } from '../ui/LoadingSpinner'
 
 export const MyOrders = () => {
   const [orders, setOrders] = useState([])
@@ -12,7 +13,7 @@ export const MyOrders = () => {
 
   useEffect(() => {
     if (user?.email) {
-      axios.get(`http://localhost:5000/pruchasedfoods/${user.email}`)
+      axios.get(`https://restaurant-management-server-side-five.vercel.app/pruchasedfoods/${user.email}`)
         .then((res) => {
           setOrders(res.data)
           setLoading(false)
@@ -26,7 +27,7 @@ export const MyOrders = () => {
 
   const handleDelete = (orderId) => {
   
-    axios.delete(`http://localhost:5000/purchasedfoods/${orderId}`)
+    axios.delete(`https://restaurant-management-server-side-five.vercel.app/purchasedfoods/${orderId}`)
       .then(() => {
         toast.success('Order deleted successfully!')
         setOrders(orders.filter(order => order._id !== orderId))
@@ -38,11 +39,7 @@ export const MyOrders = () => {
   }
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <span className="loading loading-spinner loading-lg text-primary"></span>
-      </div>
-    )
+    return <FullScreenLoader text="Loading your orders..." />
   }
 
   return (

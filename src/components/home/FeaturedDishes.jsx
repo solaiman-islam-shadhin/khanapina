@@ -8,7 +8,7 @@ export const FeaturedDishes = () => {
   const [foods, setFoods] = useState([])
 
   useEffect(() => {
-    axios.get('http://localhost:5000/foods')
+    axios.get('https://restaurant-management-server-side-five.vercel.app/foods')
       .then((res) => {
 
         const sortedFoods = res.data.sort((a, b) => (b.purchse || 0) - (a.purchse || 0))
@@ -49,72 +49,10 @@ export const FeaturedDishes = () => {
           </motion.p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {foods.slice(0, 3).map((food, index) => (
-            <motion.div
-              key={food._id}
-              className="card bg-base-200 shadow-xl hover:shadow-2xl transition-all duration-300 group"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
-
-            >
-              <motion.figure
-                className="px-4 pt-4"
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.3 }}
-              >
-                <img
-                  src={food.foodImage}
-                  alt={food.foodName}
-                  className="rounded-xl h-64 w-full object-cover"
-                />
-              </motion.figure>
-              <div className="card-body">
-                <motion.h3
-                  className="card-title text-primary font-play"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 + index * 0.2 }}
-                >
-                  {food.foodName}
-                </motion.h3>
-                <motion.p
-                  className="text-base-content"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.4 + index * 0.2 }}
-                >
-                  {food.description}
-                </motion.p>
-                <motion.div
-                  className="card-actions justify-between items-center mt-4"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.5 + index * 0.2 }}
-                >
-                  <span className="text-2xl font-bold text-primary">{food.price}৳</span>
-                  <motion.button
-
-                    className="btn btn-primary btn-sm"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-
-                  >
-                    <Link to={`/food/${food._id}`}>Order Now</Link>
-                  </motion.button>
-                </motion.div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+    
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-          {foods.slice(3, 6).map((food, index) => (
+          {foods.slice(0, 6).map((food, index) => (
             <motion.div
               key={food._id}
               className="card bg-base-200 shadow-xl hover:shadow-2xl transition-all duration-300 group"
@@ -164,12 +102,12 @@ export const FeaturedDishes = () => {
                   <span className="text-2xl font-bold text-primary">{food.price}৳</span>
                   <motion.button
 
-                    className="btn btn-primary btn-sm"
+                    className="btn btn-primary btn-md"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
 
                   >
-                    <Link to={`/food/${food._id}`}>Order Now</Link>
+                    <Link to={`/food/${food._id}`}>View Details</Link>
                   </motion.button>
                 </motion.div>
               </div>

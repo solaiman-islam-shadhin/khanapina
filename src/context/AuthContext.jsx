@@ -9,16 +9,22 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [manualUser, setManualUser] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [initialized, setInitialized] = useState(false)
   const provider = new GoogleAuthProvider();
 
   const googleLogin = () => {
+    setLoading(true)
+    provider.setCustomParameters({
+      prompt: 'select_account'
+    })
     return signInWithPopup(auth, provider)
       .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
+        setLoading(false)
         return result;
       }).catch((error) => {
-        alert(error.message)
-
+        setLoading(false)
+        console.error('Google login error:', error)
+        throw error
       });
   }
 
@@ -75,9 +81,19 @@ export const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser)
       setLoading(false)
+      setInitialized(true)
     })
     return () => unsubscribe()
   }, [])
+
+  // Don't render children until Firebase auth is initialized
+  if (!initialized) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <span className="loading loading-spinner loading-lg text-primary"></span>
+      </div>
+    )
+  }
 
   const authInfo = {
     user,
@@ -90,7 +106,8 @@ export const AuthProvider = ({ children }) => {
     Toast,
     Toast2,
     manualUser,
-    setManualUser
+    setManualUser,
+    initialized
   }
 
   return (

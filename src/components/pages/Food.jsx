@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router'
 import { motion } from 'framer-motion'
 import axios from 'axios'
 import AuthContext from '../../context/AuthContext'
+import { FullScreenLoader } from '../ui/LoadingSpinner'
 
 export const Food = () => {
   const { id } = useParams()
@@ -12,7 +13,7 @@ export const Food = () => {
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/foods/${id}`)
+    axios.get(`https://restaurant-management-server-side-five.vercel.app/foods/${id}`)
       .then((res) => {
         setFood(res.data)
         setLoading(false)
@@ -28,11 +29,7 @@ export const Food = () => {
 
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <span className="loading loading-spinner loading-lg text-primary"></span>
-      </div>
-    )
+    return <FullScreenLoader text="Loading food details..." />
   }
 
   if (!food) {

@@ -10,6 +10,7 @@ import { Food } from "../components/pages/Food";
 import { MyFood } from "../components/pages/MyFood";
 import { MyOrders } from "../components/pages/MyOrders";
 import { AllFoods } from "../components/pages/AllFoods";
+import { PrivateRoute } from "../components/PrivateRoute/PrivateRoute";
 
 
 const router = createBrowserRouter([
@@ -31,11 +32,11 @@ const router = createBrowserRouter([
             },
             {
                 path: "purchase/:id",
-                Component: Purchase
+                element: <PrivateRoute><Purchase /></PrivateRoute>
             },
             {
                 path: "add-food",
-                Component: AddFood
+                element: <PrivateRoute><AddFood /></PrivateRoute>
             },
             {
                 path: "all-foods",
@@ -51,11 +52,11 @@ const router = createBrowserRouter([
             },
             {
                 path: "my-foods",
-                Component: MyFood
+                element: <PrivateRoute><MyFood /></PrivateRoute>
             },
             {
                 path: "my-orders",
-                Component: MyOrders
+                element: <PrivateRoute><MyOrders /></PrivateRoute>
             },
             
         ]

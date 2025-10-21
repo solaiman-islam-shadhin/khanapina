@@ -13,7 +13,7 @@ export const Purchase = () => {
   const { id } = useParams()
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/foods/${id}`)
+    axios.get(`https://restaurant-management-server-side-five.vercel.app/foods/${id}`)
       .then((res) => {
         setFood(res.data)
 
@@ -35,13 +35,11 @@ export const Purchase = () => {
     const currentQuantity = parseInt(food.quantity);
     const newQuantity = currentQuantity - purchaseQuantity;
     
-    axios.patch(`http://localhost:5000/foods/${id}`, {
+    axios.patch(`https://restaurant-management-server-side-five.vercel.app/foods/${id}`, {
       quantity: newQuantity,
       purchse: newPurchaseCount
     })
       .then((res) => {
-        alert('Purchase successful and inventory updated!')
-        console.log(res.data)
       })
       .catch((err) => {
         alert('Error completing purchase: ' + err.message)
@@ -55,7 +53,7 @@ export const Purchase = () => {
     PurchasedFood.foodId = id;
 
 
-    axios.post('http://localhost:5000/purchasedfoods', {
+    axios.post('https://restaurant-management-server-side-five.vercel.app/purchasedfoods', {
       ...PurchasedFood
     })
       .then((res) => {
