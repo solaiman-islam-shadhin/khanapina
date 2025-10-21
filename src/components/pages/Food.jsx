@@ -129,11 +129,11 @@ export const Food = () => {
                 >
                   <h3 className="text-lg font-semibold text-base-content mb-3 font-play">Added by</h3>
                   <div className="flex items-center gap-3">
-                    {/* <div className="avatar placeholder">
+                    <div className="avatar placeholder">
                       <div className="bg-primary text-primary-content rounded-full w-12">
-                        <img src={user?.photoURL} alt={user.displayName} />
+                        <img src={food.image} alt={food.name} />
                       </div>
-                    </div> */}
+                    </div>
                     <div>
                       <p className="font-semibold text-base-content">{food.name}</p>
                       <p className="text-sm text-base-content opacity-70">{food.email}</p>

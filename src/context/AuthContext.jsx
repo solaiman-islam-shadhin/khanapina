@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect } from 'react'
 import { signInWithEmailAndPassword, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import auth from '../Firebase/Firebase.config'
 import Swal from 'sweetalert2'
+import { FullScreenLoader } from '../components/ui/LoadingSpinner'
 
 const AuthContext = createContext(null)
 
@@ -88,11 +89,7 @@ export const AuthProvider = ({ children }) => {
 
   // Don't render children until Firebase auth is initialized
   if (!initialized) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <span className="loading loading-spinner loading-lg text-primary"></span>
-      </div>
-    )
+    return <FullScreenLoader text="Initializing..." />
   }
 
   const authInfo = {

@@ -7,14 +7,16 @@ import { toast, ToastContainer } from "react-toastify";
 export const AddFood = () => {
 
   const categories = ['Bengali', 'Chinese', 'Indian', 'Continental', 'Fast Food', 'Dessert', 'Beverage']
-  const { user } = useContext(AuthContext);
+  const { user,manualUser } = useContext(AuthContext);
   const handleSubmit = (e) => {
     e.preventDefault()
     const form = e.target;
     const formData = new FormData(form);
     const FoodData = Object.fromEntries(formData.entries());
     const purchse = 0;
+    const image = user.photoURL || manualUser.photoURL
     FoodData.purchse = purchse;
+    FoodData.image = image;
     axios.post('https://restaurant-management-server-side-five.vercel.app/foods', {
       ...FoodData
     })
@@ -140,7 +142,7 @@ export const AddFood = () => {
                   <input
                     type="text"
                     name="name"
-                    defaultValue={user.displayName}
+                    defaultValue={user.displayName || manualUser.name}
                     className="input input-bordered focus:border-none input-lg w-full bg-base-200"
                     readOnly
                   />

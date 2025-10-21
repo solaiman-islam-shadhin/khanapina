@@ -10,10 +10,33 @@ export const Register = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
+  const [password, setPassword] = useState('');
+  const [passwordErrors, setPasswordErrors] = useState([]);
+
+  const validatePassword = (pass) => {
+    const errors = [];
+    if (pass.length < 6) errors.push('At least 6 characters');
+    if (!/[A-Z]/.test(pass)) errors.push('One uppercase letter');
+    if (!/[a-z]/.test(pass)) errors.push('One lowercase letter');
+    if (!/[0-9]/.test(pass)) errors.push('One number');
+    return errors;
+  };
+
+  const handlePasswordChange = (e) => {
+    const pass = e.target.value;
+    setPassword(pass);
+    setPasswordErrors(validatePassword(pass));
+  };
 
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    
+    if (passwordErrors.length > 0) {
+      toast.error('Please fix password requirements');
+      return;
+    }
+    
     setLoading(true)
     const formdata = new FormData(e.target)
     const { email, password, ...rest } = Object.fromEntries(formdata.entries());
@@ -34,7 +57,7 @@ export const Register = () => {
           })
       })
       .catch((error) => {
-        alert(error.message);
+        toast.error(error.message);
       })
       .finally(() => {
         setLoading(false)
@@ -118,23 +141,37 @@ export const Register = () => {
               <input
                 type="password"
                 name="password"
-
+                value={password}
+                onChange={handlePasswordChange}
                 placeholder="Create a password"
-                className="input input-bordered focus:border-none w-full focus:input-primary "
+                className={`input input-bordered focus:border-none w-full ${passwordErrors.length > 0 ? 'input-error' : 'focus:input-primary'}`}
                 required
               />
-
-              <label className="label mt-1">
-                <span className="label-text-alt text-base-content opacity-70">
-                  Must have uppercase, lowercase, and 6+ characters
-                </span>
-              </label>
+              
+              {/* Password Requirements */}
+              <div className="mt-2 space-y-1">
+                {['At least 6 characters', 'One uppercase letter', 'One lowercase letter', 'One number'].map((req, index) => {
+                  const isValid = !passwordErrors.includes(req);
+                  return (
+                    <div key={index} className={`flex items-center text-sm ${isValid ? 'text-success' : 'text-error'}`}>
+                      <svg className={`w-4 h-4 mr-2 ${isValid ? 'text-success' : 'text-error'}`} fill="currentColor" viewBox="0 0 20 20">
+                        {isValid ? (
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        ) : (
+                          <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                        )}
+                      </svg>
+                      {req}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
 
             <button
               type="submit"
               className="btn btn-primary w-full font-play text-lg"
-              disabled={loading}
+              disabled={loading || passwordErrors.length > 0}
             >
               {loading ? <LoadingSpinner size="sm" text="" /> : 'Create Account'}
             </button>

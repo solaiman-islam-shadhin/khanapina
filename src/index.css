@@ -14,7 +14,7 @@
 
 @import "tailwindcss";
 @plugin "daisyui"{
-  themes: halloween --default, dark --prefersdark, cupcake,abyss, forest, synthwave, retro, cyberpunk, valentine, halloween, garden, bumblebee, lavalamp, night, coffee, winter;
+  themes: coffee --default, dark --prefersdark, cupcake,abyss, forest, synthwave, retro, cyberpunk, valentine, halloween, garden, bumblebee, lavalamp, night, coffee, winter;
 } ;
 @theme {
   --font-play: 'PlaywriteDESAS', sans-serif;

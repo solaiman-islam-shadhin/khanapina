@@ -9,7 +9,7 @@ export const Purchase = () => {
 
   const [food, setFood] = useState(null)
 
-  const { user } = useContext(AuthContext);
+  const { user,manualUser } = useContext(AuthContext);
   const { id } = useParams()
 
   useEffect(() => {
@@ -130,7 +130,7 @@ export const Purchase = () => {
                         value={quantity}
                         onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
                         className="input input-bordered focus:border-none input-lg w-full focus:input-primary"
-                        min="1"
+                        min='1'
                         max={food ? food.quantity : 1}
                         required
                       />
@@ -160,7 +160,7 @@ export const Purchase = () => {
                       <input
                         type="text"
                         name='name'
-                        value={user?.displayName || user?.name || ''}
+                        value={user?.displayName || manualUser?.name || ''}
                         className="input input-bordered focus:border-none input-lg w-full bg-base-200"
                         readOnly
                       />

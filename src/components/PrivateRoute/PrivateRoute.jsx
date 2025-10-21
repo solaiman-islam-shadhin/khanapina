@@ -4,11 +4,11 @@ import AuthContext from '../../context/AuthContext'
 import { FullScreenLoader } from '../ui/LoadingSpinner'
 
 export const PrivateRoute = ({ children }) => {
-  const { user, loading } = useContext(AuthContext)
+  const { user, loading, initialized } = useContext(AuthContext)
   const location = useLocation()
 
-  if (loading) {
-    return <FullScreenLoader text="Checking authentication..." />
+  if (!initialized || loading) {
+    return null
   }
 
   if (!user) {

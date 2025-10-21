@@ -11,6 +11,8 @@ import { MyFood } from "../components/pages/MyFood";
 import { MyOrders } from "../components/pages/MyOrders";
 import { AllFoods } from "../components/pages/AllFoods";
 import { PrivateRoute } from "../components/PrivateRoute/PrivateRoute";
+import { NotFound } from "../components/pages/NotFound";
+import { Reviews } from "../components/pages/Reviews";
 
 
 const router = createBrowserRouter([
@@ -47,6 +49,10 @@ const router = createBrowserRouter([
                 Component: Gallery
             },
             {
+                path: "reviews",
+                Component: Reviews
+            },
+            {
                 path: "food/:id",
                 Component: Food
             },
@@ -58,6 +64,10 @@ const router = createBrowserRouter([
                 path: "my-orders",
                 element: <PrivateRoute><MyOrders /></PrivateRoute>
             },
+            {
+                path: "*",
+                Component: NotFound
+            }
             
         ]
     }

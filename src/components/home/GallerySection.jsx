@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router'
 
 export const GallerySection = () => {
+  const [loadedImages, setLoadedImages] = useState({})
+
+  const handleImageLoad = (index) => {
+    setLoadedImages(prev => ({ ...prev, [index]: true }))
+  }
   return (
     <section className="py-20 bg-base-200">
       <div className="container mx-auto px-4">
@@ -61,10 +66,15 @@ export const GallerySection = () => {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               whileHover={{ y: -10, scale: 1.02 }}
             >
+              {!loadedImages[index] && (
+                <div className="skeleton w-full h-64 absolute inset-0 z-10"></div>
+              )}
               <motion.img 
                 src={item.src}
                 alt={item.title}
                 className="w-full h-64 object-cover"
+                onLoad={() => handleImageLoad(index)}
+                style={{ opacity: loadedImages[index] ? 1 : 0 }}
                 whileHover={{ scale: 1.1 }}
                 transition={{ duration: 0.3 }}
               />

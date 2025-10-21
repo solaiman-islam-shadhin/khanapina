@@ -1,33 +1,52 @@
-import { useEffect } from 'react';
-import React, { useContext,  } from 'react'
-import { Theme } from '../themes/Theme'
+import React, { useContext, useEffect, useState } from 'react';
+import { Theme } from '../themes/Theme';
 import { Link, NavLink } from 'react-router';
 import AuthContext from '../../context/AuthContext';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
-
+import avatar from "../../assets/logo/Copilot_20251020_001653.png";
 
 export const Navbar = () => {
   const authContext = useContext(AuthContext);
   
-  // Add null check for context
+
+  const [isUserLoading, setIsUserLoading] = useState(false);
+
+
   if (!authContext) {
-    return null; // or a loading spinner
+    return null; 
   }
-  
+
   const { user, logOut, manualUser, setManualUser } = authContext;
-  
+
   useEffect(() => {
+    
     if (user && user.email && setManualUser && typeof setManualUser === 'function') {
+      
+     
+      if (manualUser && manualUser.email === user.email) {
+        setIsUserLoading(false); 
+        return;
+      }
+
+      setIsUserLoading(true);
       axios.get(`https://restaurant-management-server-side-five.vercel.app/user/${user.email}`)
         .then((response) => {
           setManualUser(response.data);
         })
         .catch((error) => {
           console.error('Error fetching user data:', error);
+        })
+        .finally(() => {
+         
+          setIsUserLoading(false);
         });
+    } else {
+     
+      setIsUserLoading(false);
     }
-  }, [user, setManualUser]);
+ 
+  }, [user, setManualUser, manualUser]);
 
   const handleLogout = () => {
     logOut()
@@ -38,14 +57,17 @@ export const Navbar = () => {
         alert(error.message);
       });
   };
+
   const links = <>
     <NavLink to='/' className={({ isActive }) => isActive ? "text-accent text-md md:text-lg  link" : "text-primary text-md md:text-lg  hover:text-accent hover:link"}>Home</NavLink>
     <NavLink to='all-foods' className={({ isActive }) => isActive ? "text-accent text-md md:text-lg  link" : "text-primary text-md md:text-lg  hover:text-accent hover:link"}>All Foods</NavLink>
     <NavLink to='/gallery' className={({ isActive }) => isActive ? "text-accent text-md md:text-lg  link" : "text-primary text-md md:text-lg  hover:text-accent hover:link"}>Gallery</NavLink>
-  </>
+    <NavLink to='/reviews' className={({ isActive }) => isActive ? "text-accent text-md md:text-lg  link" : "text-primary text-md md:text-lg  hover:text-accent hover:link"}>Reviews</NavLink>
+  </>;
+
   return (
     <div className="container mx-auto navbar bg-transparent mt-4 mb-2 font-play ">
-<ToastContainer />
+      <ToastContainer />
       {/* Mobile menu */}
       <div className="dropdown lg:hidden z-20 ">
         <div tabIndex={0} role="button" className="btn btn-ghost">
@@ -78,7 +100,15 @@ export const Navbar = () => {
             <div className="dropdown dropdown-end">
               <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                 <div className="w-10 rounded-full">
-                  <img src={user?.photoURL || manualUser?.photoURL || "https://via.placeholder.com/40"} alt={user?.displayName || "User"} />
+                 
+                  {isUserLoading ? (
+                    <div className="skeleton w-10 h-10 rounded-full"></div>
+                  ) : (
+                    <img
+                      src={manualUser?.photoURL || user?.photoURL || avatar}
+                      alt={user?.displayName || "User"}
+                    />
+                  )}
                 </div>
               </div>
               <ul tabIndex={0} className="menu menu-sm dropdown-content bg-base-200 rounded-box z-20 mt-3 w-44 md:w-52 p-2 shadow">
@@ -93,8 +123,6 @@ export const Navbar = () => {
           )}
         </div>
       </div>
-
-
     </div>
   )
 }
